@@ -1,0 +1,7 @@
+{
+        "shell-version": ["3.0"], 
+        "uuid": "icon-manager@krajniak.info", 
+        "name": "icon-manager", 
+        "description": "Manage icons in top bar.",
+        "url": "http://clet.blogspot.com/"
+}
