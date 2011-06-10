@@ -10,6 +10,5 @@ Press Alt+F2, type dconf-editor
 2. Find settings
 org/gnome/shell/extensions/icon-manager
 
-3. Edit keys
- * top-bar: put icons that you want to remove
- * tray-bar: put name of icons that you want to move to top bar
+3. Edit key
+ * top-bar: put icons that you want to remove from top-bar or move from tray bar

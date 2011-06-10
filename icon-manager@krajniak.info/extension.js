@@ -29,7 +29,6 @@ const StatusIconDispatcher = imports.ui.statusIconDispatcher;
 
 const SETTINGS_SCHEMA = 'org.gnome.shell.extensions.icon-manager';
 const SETTINGS_KEY_TOPBAR = 'top-bar';
-const SETTINGS_KEY_TRAYBAR = "tray-bar"
 
 function IconManager() {
         this._init();
@@ -39,17 +38,14 @@ IconManager.prototype = {
         _init: function() {
                 this._settings = new Gio.Settings({schema: SETTINGS_SCHEMA});
                 this.topBar =  this._settings.get_strv(SETTINGS_KEY_TOPBAR);
-                this.trayBar = this._settings.get_strv(SETTINGS_KEY_TRAYBAR);
-
-                // move icon to top bar from tray bar
-                for(let idx in this.trayBar) {
-                        StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[this.trayBar[idx]] = this.trayBar[idx];
-                }
                 
                 // remove icons from top bar
                 for(let idx in this.topBar) {
+                        // remove from top bar
                         if(this.topBar[idx] in Panel.STANDARD_TRAY_ICON_SHELL_IMPLEMENTATION) {
                                 Panel.STANDARD_TRAY_ICON_SHELL_IMPLEMENTATION[this.topBar[idx]] = '';
+                        } else { // put in top bar
+                                StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[this.topBar[idx]] = this.topBar[idx];
                         }
                 }
         }

@@ -4,14 +4,12 @@
     <key type="as" name="top-bar">
       <default>[]</default>
       <summary>Top Bar icons</summary>
-      <description>List of icons that will be removed from top panel. 
-      Icons:  a11y (accessibility icon), display, keyboard, volume, bluetooth, network, battery
+      <description>
+      List of icons that will be removed from top panel. 
+      Gnome Shell Icons:  a11y (accessibility icon), display, keyboard, volume, bluetooth, network, battery
+      
+      All other icon names that you put here, will be moved from tray bar e.g. gnote, tomboy
       </description>
     </key>
-    <key type="as" name="tray-bar">
-      <default>[]</default>
-      <summary>Bottom Bar icons</summary>
-      <description>List of icons that will be moved from tray to top panel, e.g. tomboy</description>
-    </key>
-  </schema>
+   </schema>
 </schemalist>
