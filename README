@@ -13,5 +13,5 @@ org/gnome/shell/extensions/icon-manager
 3. Edit key
  * top-bar: put icons that you want to remove from top-bar or move from tray bar
  
-4. To approve changes you need to restart gnome-shell
+4. To accept changes you need to restart gnome-shell
 Alt+F2, type r
