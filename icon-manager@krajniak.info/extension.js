@@ -40,19 +40,16 @@ IconManager.prototype = {
                 this._settings = new Gio.Settings({schema: SETTINGS_SCHEMA});
                 this.topBar =  this._settings.get_strv(SETTINGS_KEY_TOPBAR);
                 this.trayBar = this._settings.get_strv(SETTINGS_KEY_TRAYBAR);
-        },
-        update: function() {
-                global.log(this.topBar.toSource());
-                global.log(this.trayBar.toSource())
+
                 // move icon to top bar from tray bar
-                for(let iconName in this.trayBar) {
-                        StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[iconName] = iconName;
+                for(let idx in this.trayBar) {
+                        StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[this.trayBar[idx]] = this.trayBar[idx];
                 }
                 
                 // remove icons from top bar
-                for(let iconName in this.topBar) {
-                        if(iconName in Panel.STANDARD_TRAY_ICON_SHELL_IMPLEMENTATION) {
-                                Panel.STANDARD_TRAY_ICON_SHELL_IMPLEMENTATION[iconName] = '';
+                for(let idx in this.topBar) {
+                        if(this.topBar[idx] in Panel.STANDARD_TRAY_ICON_SHELL_IMPLEMENTATION) {
+                                Panel.STANDARD_TRAY_ICON_SHELL_IMPLEMENTATION[this.topBar[idx]] = '';
                         }
                 }
         }
@@ -60,5 +57,4 @@ IconManager.prototype = {
 
 function main() {
     iconManager = new IconManager();
-    iconManager.update();
 }
