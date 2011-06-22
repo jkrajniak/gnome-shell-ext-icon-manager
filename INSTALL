@@ -1,6 +1,5 @@
 How to install?
 ===============================================================================
-This procedure was performed under Fedora 15
 
 (root)
 1. Copy gsettings schema
@@ -9,7 +8,7 @@ cp org.gnome.shell.extensions.icon-manager.gschema.xml /usr/share/glib-2.0/schem
 2. Run GSettings schema compiler
 glib-compile-schemas /usr/share/glib-2.0/schemas
 
-Install extensions for single user
+Install extensions for single user:
 1. Copy icon-manager@krajniak.info
 cp -r icon-manager@krajniak.info ~/.local/share/gnome-shell/extensions/
 
