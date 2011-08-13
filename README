@@ -12,6 +12,8 @@ Press Alt+F2, type dconf-editor
 
 3. Edit key
  * top-bar: put icons that you want to remove from top-bar or move from tray bar
+ * desaturation-factor: 0 -- no desaturation, 1 -- full desaturation (grayscale)
+   or any number between
  
 4. To accept changes you need to restart gnome-shell
 Alt+F2, type r
