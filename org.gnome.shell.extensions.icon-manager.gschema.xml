@@ -11,5 +11,9 @@
       All other icon names that you put here, will be moved from tray bar e.g. gnote, tomboy
       </description>
     </key>
+    <key type="d" name="desaturation-factor">
+      <default>1.0</default>
+      <summary>Desaturation factor</summary>
+    </key>
    </schema>
 </schemalist>
