@@ -42,8 +42,8 @@ IconManager.prototype = {
                 // remove icons from top bar
                 for(let idx in this.topBar) {
                         // remove from top bar
-                        if(this.topBar[idx] in Panel.STANDARD_TRAY_ICON_SHELL_IMPLEMENTATION) {
-                                Panel.STANDARD_TRAY_ICON_SHELL_IMPLEMENTATION[this.topBar[idx]] = '';
+                        if(this.topBar[idx] in Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION) {
+                                Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION[this.topBar[idx]] = '';
                         } else { // put in top bar
                                 StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[this.topBar[idx]] = this.topBar[idx];
                         }
