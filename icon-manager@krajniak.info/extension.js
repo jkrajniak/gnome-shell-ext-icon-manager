@@ -51,6 +51,13 @@ IconManager.prototype = {
         }
 }
 
-function main() {
+function init() {
     iconManager = new IconManager();
+}
+
+function enable() {
+}
+
+function disable() {
+    return true;
 }
