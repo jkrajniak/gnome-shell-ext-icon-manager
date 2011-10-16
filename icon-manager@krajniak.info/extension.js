@@ -23,12 +23,14 @@
 const St = imports.gi.St;
 const Gio = imports.gi.Gio;
 const Main = imports.ui.main;
+const Clutter = imports.gi.Clutter;
 
 const Panel = imports.ui.panel;
 const StatusIconDispatcher = imports.ui.statusIconDispatcher;
 
 const SETTINGS_SCHEMA = 'org.gnome.shell.extensions.icon-manager';
 const SETTINGS_KEY_TOPBAR = 'top-bar';
+const SETTINGS_KEY_DESATURATION_FACTOR = 'desaturation-factor';
 
 function IconManager() {
         this._init();
@@ -38,6 +40,12 @@ IconManager.prototype = {
         _init: function() {
                 this._settings = new Gio.Settings({schema: SETTINGS_SCHEMA});
                 this.topBar =  this._settings.get_strv(SETTINGS_KEY_TOPBAR);
+                
+                this.desaturation_factor = this._settings.get_double(SETTINGS_KEY_DESATURATION_FACTOR);
+                
+                if (this.desaturation_factor > 0.0) {
+                        Main.panel._trayBox.add_effect_with_name("grayscale", new Clutter.DesaturateEffect({ factor: this.desaturation_factor }));
+                }
                 
                 // remove icons from top bar
                 for(let idx in this.topBar) {
