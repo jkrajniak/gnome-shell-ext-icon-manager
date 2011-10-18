@@ -29,8 +29,8 @@ const Panel = imports.ui.panel;
 const StatusIconDispatcher = imports.ui.statusIconDispatcher;
 
 const SETTINGS_SCHEMA = 'org.gnome.shell.extensions.icon-manager';
-const SETTINGS_KEY_TOPBAR = 'top-bar';
-const SETTINGS_KEY_DESATURATION_FACTOR = 'desaturation-factor';
+const SETTINGS_REMOVE_TOPBAR = 'remove-from-top-bar';
+const SETTINGS_ADD_TOPBAR = 'add-to-top-bar';
 
 function IconManager() {
         this._init();
@@ -39,31 +39,30 @@ function IconManager() {
 IconManager.prototype = {
         _init: function() {
                 this._settings = new Gio.Settings({schema: SETTINGS_SCHEMA});
-                this.topBar =  this._settings.get_strv(SETTINGS_KEY_TOPBAR);
+                this.removeTopBar =  this._settings.get_strv(SETTINGS_REMOVE_TOPBAR);
+		this.addTopBar = this._settings.get_strv(SETTINGS_ADD_TOPBAR);
                 
-                this.desaturation_factor = this._settings.get_double(SETTINGS_KEY_DESATURATION_FACTOR);
-                
-                if (this.desaturation_factor > 0.0) {
-                        Main.panel._trayBox.add_effect_with_name("grayscale", new Clutter.DesaturateEffect({ factor: this.desaturation_factor }));
-                }
                 
                 // remove icons from top bar
-                for(let idx in this.topBar) {
+                for(let idx in this.removeTopBar) {
                         // remove from top bar
                         if(this.topBar[idx] in Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION) {
-                                Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION[this.topBar[idx]] = '';
-                        } else { // put in top bar
-                                StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[this.topBar[idx]] = this.topBar[idx];
-                        }
+                                Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION[this.removeTopBar[idx]] = '';
+                        } 
+		for(let idx in this.addTopBar) { // put in top bar
+			StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[this.addTopBar[idx]] = this.addTopBar[idx];
+                       
                 }
         }
 }
 
 function init() {
-    iconManager = new IconManager();
+  
 }
 
 function enable() {
+    iconManager = new IconManager();
+    
 }
 
 function disable() {

@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema id="org.gnome.shell.extensions.icon-manager" path="/org/gnome/shell/extensions/icon-manager/">
-    <key type="as" name="top-bar">
+    <key type="as" name="remove-from-top-bar">
       <default>[]</default>
-      <summary>Top Bar icons</summary>
+      <summary>Remove icons from top bar</summary>
       <description>
       List of icons that will be removed from top panel. 
       Gnome Shell Icons:  a11y (accessibility icon), display, keyboard, volume, bluetooth, network, battery
       
-      All other icon names that you put here, will be moved from tray bar e.g. gnote, tomboy
       </description>
+    </key>
+    <key type="as" name="add-to-top-bar">
+        <default>[]</default>
+        <summary>Add some icons to top bar</summary>
+        <description>
+        List of icons that will be moved to top bar
+        </description>
     </key>
     <key type="d" name="desaturation-factor">
       <default>1.0</default>
