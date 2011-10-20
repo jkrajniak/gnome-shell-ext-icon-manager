@@ -40,18 +40,17 @@ IconManager.prototype = {
         _init: function() {
                 this._settings = new Gio.Settings({schema: SETTINGS_SCHEMA});
                 this.removeTopBar =  this._settings.get_strv(SETTINGS_REMOVE_TOPBAR);
-		this.addTopBar = this._settings.get_strv(SETTINGS_ADD_TOPBAR);
-                
-                
-                // remove icons from top bar
+                this.addTopBar = this._settings.get_strv(SETTINGS_ADD_TOPBAR);
+                        
                 for(let idx in this.removeTopBar) {
-                        // remove from top bar
-                        if(this.topBar[idx] in Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION) {
-                                Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION[this.removeTopBar[idx]] = '';
-                        } 
-		for(let idx in this.addTopBar) { // put in top bar
-			StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[this.addTopBar[idx]] = this.addTopBar[idx];
-                       
+                    if(this.topBar[idx] in Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION) {
+                            Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION[this.removeTopBar[idx]] = '';
+                    }
+                }
+
+                for(let idx in this.addTopBar) { // put in top bar
+                    StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[this.addTopBar[idx]] = this.addTopBar[idx];
+                               
                 }
         }
 }
