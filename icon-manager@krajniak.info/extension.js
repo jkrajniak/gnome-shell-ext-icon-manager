@@ -1,5 +1,5 @@
 /*
- * gnome-shell-extension-icon-manager
+ * gnome-shell-ext-icon-manager
  * 
  * Configure icons which appear on system system-icons
  * Copyright (C) 2011 Jakub Krajniak <jkrajniak@gmail.com>  
@@ -29,27 +29,27 @@ const Panel = imports.ui.panel;
 const StatusIconDispatcher = imports.ui.statusIconDispatcher;
 
 const SETTINGS_SCHEMA = 'org.gnome.shell.extensions.icon-manager';
-const SETTINGS_REMOVE_TOPBAR = 'remove-from-top-bar';
-const SETTINGS_ADD_TOPBAR = 'add-to-top-bar';
+const SETTINGS_REMOVE_TOPBAR = 'top-bar';
 
 function IconManager() {
         this._init();
 }
 
 IconManager.prototype = {
-        enable: function() {
-            
+        enable: function() { 
             // prepare array with elements to remove
             var removeTopBarElements = [];
-            //global.log(removeTopBar);
+
             for(let i in removeTopBar) {
-                if(Main.panel._statusArea[removeTopBar[i]]){
-                   Main.panel._statusArea[removeTopBar[i]].destroy();
+                name = removeTopBar[i];
+                if(Main.panel._statusArea[name]) {
+                   Main.panel._statusArea[name].destroy();
+                } else {
+                    if(!(name in StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS)) {
+                        StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[name] = name;
+                    }
                 }
             }
-
-            // add elements
-             
 
             return true;
             
@@ -62,14 +62,11 @@ IconManager.prototype = {
                 indicator = null;
                 if(name in Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION) {
                     indicator = new Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION[name];
-                } else {
-                    global.log(">>" + name);
                 }
+
                 try {
                     Main.panel.addToStatusArea(name, indicator, Panel.STANDARD_STATUS_AREA_ORDER.indexOf(name));
-                } catch(e) {
-                   global.log("+++ "+name); 
-                }
+                } catch(e) { }
             }
             
             return true;
@@ -77,24 +74,9 @@ IconManager.prototype = {
         },
         
         _init: function() {
-                this._settings = new Gio.Settings({schema: SETTINGS_SCHEMA});
+            this._settings = new Gio.Settings({schema: SETTINGS_SCHEMA});
 
-                removeTopBar =  this._settings.get_strv(SETTINGS_REMOVE_TOPBAR);
-                addTopBar = this._settings.get_strv(SETTINGS_ADD_TOPBAR);
-                
-                /*
-                for(let idx in this.removeTopBar) {
-                    if(this.topBar[idx] in Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION) {
-                            Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION[this.removeTopBar[idx]] = '';
-                    }
-                }
-
-                for(let idx in this.addTopBar) { // put in top bar
-                    StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[this.addTopBar[idx]] = this.addTopBar[idx];
-                               
-                }
-                */
-
+            removeTopBar =  this._settings.get_strv(SETTINGS_REMOVE_TOPBAR);
         }
 }
 
