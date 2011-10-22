@@ -37,11 +37,52 @@ function IconManager() {
 }
 
 IconManager.prototype = {
+        enable: function() {
+            
+            // prepare array with elements to remove
+            var removeTopBarElements = [];
+            //global.log(removeTopBar);
+            for(let i in removeTopBar) {
+                if(Main.panel._statusArea[removeTopBar[i]]){
+                   Main.panel._statusArea[removeTopBar[i]].destroy();
+                }
+            }
+
+            // add elements
+             
+
+            return true;
+            
+        },
+        disable: function() {
+
+            // revert
+            for(let i in removeTopBar) {
+                name = removeTopBar[i];
+                indicator = null;
+                if(name in Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION) {
+                    indicator = new Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION[name];
+                } else {
+                    global.log(">>" + name);
+                }
+                try {
+                    Main.panel.addToStatusArea(name, indicator, Panel.STANDARD_STATUS_AREA_ORDER.indexOf(name));
+                } catch(e) {
+                   global.log("+++ "+name); 
+                }
+            }
+            
+            return true;
+
+        },
+        
         _init: function() {
                 this._settings = new Gio.Settings({schema: SETTINGS_SCHEMA});
-                this.removeTopBar =  this._settings.get_strv(SETTINGS_REMOVE_TOPBAR);
-                this.addTopBar = this._settings.get_strv(SETTINGS_ADD_TOPBAR);
-                        
+
+                removeTopBar =  this._settings.get_strv(SETTINGS_REMOVE_TOPBAR);
+                addTopBar = this._settings.get_strv(SETTINGS_ADD_TOPBAR);
+                
+                /*
                 for(let idx in this.removeTopBar) {
                     if(this.topBar[idx] in Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION) {
                             Panel.STANDARD_STATUS_AREA_SHELL_IMPLEMENTATION[this.removeTopBar[idx]] = '';
@@ -52,18 +93,20 @@ IconManager.prototype = {
                     StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[this.addTopBar[idx]] = this.addTopBar[idx];
                                
                 }
+                */
+
         }
 }
 
 function init() {
-  
+    iconManager = new IconManager();
+    iconManager._init();
 }
 
 function enable() {
-    iconManager = new IconManager();
-    
+    return iconManager.enable();
 }
 
 function disable() {
-    return true;
+    return iconManager.disable();
 }
