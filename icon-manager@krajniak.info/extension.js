@@ -24,6 +24,7 @@ const St = imports.gi.St;
 const Gio = imports.gi.Gio;
 const Main = imports.ui.main;
 const Clutter = imports.gi.Clutter;
+const Lang = imports.lang;
 
 const Panel = imports.ui.panel;
 const StatusIconDispatcher = imports.ui.statusIconDispatcher;
@@ -37,20 +38,7 @@ function IconManager() {
 
 IconManager.prototype = {
         enable: function() { 
-            // prepare array with elements to remove
-            var removeTopBarElements = [];
-
-            for(let i in removeTopBar) {
-                name = removeTopBar[i];
-                if(Main.panel._statusArea[name]) {
-                   Main.panel._statusArea[name].destroy();
-                } else {
-                    if(!(name in StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS)) {
-                        StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[name] = name;
-                    }
-                }
-            }
-
+            this._refreshTopBar();
             return true;
             
         },
@@ -72,12 +60,33 @@ IconManager.prototype = {
             return true;
 
         },
+
+        _refreshTopBar: function() {
+            this.disable();
+
+            for(let i in removeTopBar) {
+                name = removeTopBar[i];
+                if(Main.panel._statusArea[name]) {
+                   Main.panel._statusArea[name].destroy();
+                } else {
+                    if(!(name in StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS)) {
+                        StatusIconDispatcher.STANDARD_TRAY_ICON_IMPLEMENTATIONS[name] = name;
+                    }
+                }
+            }
+            
+        },
         
         _init: function() {
             this._settings = new Gio.Settings({schema: SETTINGS_SCHEMA});
+            this._updateConfig();
 
-            removeTopBar =  this._settings.get_strv(SETTINGS_REMOVE_TOPBAR);
+        },
+
+        _updateConfig: function() {
+            removeTopBar = this._settings.get_strv(SETTINGS_REMOVE_TOPBAR);
         }
+
 }
 
 function init() {

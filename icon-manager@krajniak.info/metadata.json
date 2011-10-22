@@ -2,6 +2,6 @@
         "shell-version": ["3.2"], 
         "uuid": "icon-manager@krajniak.info", 
         "name": "icon-manager", 
-        "description": "Manage icons in top bar.",
+        "description": "Manage icons on top bar.",
         "url": "https://github.com/MrTheodor/gnome-shell-ext-icon-manager"
 }
