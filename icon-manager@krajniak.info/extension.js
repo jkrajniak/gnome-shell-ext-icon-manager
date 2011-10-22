@@ -31,6 +31,7 @@ const StatusIconDispatcher = imports.ui.statusIconDispatcher;
 
 const SETTINGS_SCHEMA = 'org.gnome.shell.extensions.icon-manager';
 const SETTINGS_REMOVE_TOPBAR = 'top-bar';
+const SETTINGS_DESATURATION_FACTOR = 'desaturation-factor';
 
 function IconManager() {
         this._init();
