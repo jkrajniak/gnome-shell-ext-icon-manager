@@ -2,7 +2,7 @@
  * gnome-shell-ext-icon-manager
  * 
  * Configure icons which appear on system system-icons
- * Copyright (C) 2011 Jakub Krajniak <jkrajniak@gmail.com>  
+ * Copyright (C) 2011-2012 Jakub Krajniak <jkrajniak@gmail.com>  
  *
  * This is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,6 +86,13 @@ IconManager.prototype = {
 
         _updateConfig: function() {
             removeTopBar = this._settings.get_strv(SETTINGS_REMOVE_TOPBAR);
+            desaturation_factor = this._settings.get_double(SETTINGS_DESATURATION_FACTOR);
+
+            if(desaturation_factor > 0.0) {
+                let effect = new Clutter.DesaturateEffect(
+                    {factor: desaturation_factor});
+                Main.panel._rightBox.add_effect(effect);
+            }
         }
 
 }
@@ -93,6 +100,7 @@ IconManager.prototype = {
 function init() {
     iconManager = new IconManager();
     iconManager._init();
+     
 }
 
 function enable() {
