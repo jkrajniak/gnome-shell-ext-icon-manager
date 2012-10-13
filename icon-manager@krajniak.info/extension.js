@@ -41,7 +41,7 @@ IconManager.prototype = {
         enable: function() { 
             this._refreshTopBar();
             return true;
-            
+             
         },
         disable: function() {
 
@@ -81,7 +81,6 @@ IconManager.prototype = {
         _init: function() {
             this._settings = new Gio.Settings({schema: SETTINGS_SCHEMA});
             this._updateConfig();
-
         },
 
         _updateConfig: function() {
